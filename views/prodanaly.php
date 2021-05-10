@@ -130,6 +130,52 @@ header("location:login.php?Message=Please login to continue.");
 			<!-- right ends here -->
     </div>
 
+	<div class="analy">
+		<h2>Product Analytics :</h2>
+		<div id="analybox">
+
+			<?php
+				include("connection.php");
+				if (!$conn) {
+					die("Connection failed: " . mysqli_connect_error());
+				}
+
+				$sql = "select count(visitor_id) 'uni' ,sum(count) 'cnt' from stats where prod_id=$_GET[prod_id];";
+				$fetch= mysqli_fetch_assoc(mysqli_query($conn,$sql));
+				if($fetch['cnt']==''){
+					$cnt = 0;
+				}else{
+					$cnt = $fetch['cnt'];
+				}
+
+				echo "
+					<div class='analycard' id='analycard1'>
+						<h2>$fetch[uni]</h2>
+						<p>Unique Visitors</p>
+					</div>
+					<div class='analycard' id='analycard2'>
+						<h2>$cnt</h2>
+						<p>Product Views</p>
+					</div>
+				";
+			
+				$sql2 = "select count(user_id) 'crt' from cart where prod_id=$_GET[prod_id];";
+				$fetch2= mysqli_fetch_assoc(mysqli_query($conn,$sql2));
+				$formval3 = $fetch2['crt'];
+
+				echo "
+					<div class='analycard' id='analycard3'>
+						<h2>$formval3</h2>
+						<p>Added To Cart</p>
+					</div>
+				";
+
+				mysqli_close($conn);
+			?>
+		
+		</div>
+	</div>
+
 	<footer>
         <h1 style="text-align: center; text-transform: capitalize;color: #26133F;">bechde</h1>
         <p style="text-align: center; text-transform: capitalize;color: #000000;">Copyright © 2021 bechde. All rights reserved</p>
@@ -173,37 +219,4 @@ document.addEventListener( 'DOMContentLoaded', function () {
 	
 	primarySlider.sync( secondarySlider ).mount();
 } );
-</script>
-
-<script>
-	document.querySelector('html').addEventListener('load',()=>{
-		console.log('inside');
-		<?php
-				include('connection.php');
-				if (!$conn) {
-					die("Connection failed: " . mysqli_connect_error());
-				}else{
-					$sql1 = "select * from stats where visitor_id = $_SESSION[uid] AND prod_id = $_GET[prod_id];";
-					$res = mysqli_query($conn,$sql1);
-					if($res){
-						if(mysqli_num_rows($res)==0){ 
-							$sql2= "select user_id from product where prod_id=$_GET[prod_id];";
-							$val = mysqli_fetch_assoc(mysqli_query($conn,$sql2));
-
-							$sql= "insert into stats values ($_GET[prod_id],$val[user_id],$_SESSION[uid],1);";
-						}else{
-							$sql="update stats SET count = count + 1 where visitor_id = $_SESSION[uid] AND prod_id=$_GET[prod_id]; ";
-						}
-						
-						if(!mysqli_query($conn,$sql)){
-							echo mysqli_error($conn);
-						}
-					}else{
-						echo mysqli_error($conn);
-					}
-											
-				}
-				
-		?>
-	});
 </script>

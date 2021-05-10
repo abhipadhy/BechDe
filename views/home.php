@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,18 +12,34 @@
 <body>
    
     <div class="nav">
-       <div class="navleft">
-            <a href="reguni.php"><button>register university</button></a>
-            <a href="login.php"><button>login</button></a>
-            <a href="sign.php"><button>sign-up</button></a>
-           
-       </div>
-       <div class="navright">
-        <a href="list.php"><button>buy</button></a>
-        <a href="sell.php"><button>sell</button></a>
-        <a href="sell.php"><button>rent</button></a>
-            
-       </div>
+    <?php
+    session_start();
+    if(!isset($_SESSION['uid'])){
+        echo "<div class='navleft'>
+        <a href='reguni.php'><button>register university</button></a>
+        <a href='login.php'><button>login</button></a>
+        <a href='sign.php'><button>sign-up</button></a>
+       
+    </div>";
+    }
+    
+   else{
+    echo "<div class='navleft'>
+    <a href='reguni.php'><button>register university</button></a>
+    <a id='logout' href=login.php?message=logout&Message=Logged%20Out.><button>logout</button></a>
+ </div>
+ <div class='navright'>
+ <a href='list.php'><button>Buy</button></a>
+ <a href='sell.php'><button>Sell</button></a>
+ <a href='sell.php'><button>Rent</button></a>
+ <a href='profile.php'><button>Profile</button></a>
+     
+ </div>";
+   }
+   
+    ?>
+       
+   
     </div>
    <a href="" style="text-decoration: none;"> <h1 id="title">bechde</h1></a>
     <div class="top">
@@ -98,3 +115,12 @@
     </footer>
 </body>
 </html>
+<!-- <script>
+document.querySelector('body').addEventListener('load',()=>{
+    if(<?php echo isset($_GET['message']) ?>){
+window.location.reload();}
+})
+
+
+
+</script> -->

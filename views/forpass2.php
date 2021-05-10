@@ -9,7 +9,7 @@
 </head>
 <body>
 <nav class="navbar">
-        <h1>BechDe</h1>
+    <a href="home.php" style="text-decoration: none; margin-left:5%;"><h1>BechDe</h1></a>
       <ul>
         <li><a href="home.php">Home</a></li>
         <li><a href="sign.php">Sign-Up</a></li>

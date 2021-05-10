@@ -1,3 +1,8 @@
+<?php
+session_start();
+if(!isset($_SESSION['uid']))
+header("location:login.php?Message=Please login to continue.");
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -9,10 +14,10 @@
   </head>
   <body>
     <nav class="navbar">
-        <h1>BechDe</h1>
+    <a href="home.php" style="text-decoration: none; margin-left:5%;"><h1>BechDe</h1></a>
       <ul>
       
-        <li><a href="home.html">View Cart</a></li>
+        <li><a href="viewcart.php">View Cart</a></li>
         <li><a href="profile.php">Profile</a></li>
       </ul>
     </nav>
@@ -45,24 +50,25 @@
      <?php 
         if(isset($_REQUEST['sitem'])){
           $item = $_REQUEST['sitem'];
-          $conn = mysqli_connect("localhost", "bechde", "bechde", "bechde");
+          include('connection.php');
           if (!$conn) {
               die("Connection failed: " . mysqli_connect_error());
           }
-
-          $sql =" SELECT * from product where pname like '%$item%';";
+          
+          $sql =" SELECT * from product where pname like '%$item%' AND stat = 'available' AND univ = '$_SESSION[univ]';";
           $res = mysqli_query($conn,$sql);
+    
           $count = mysqli_num_rows($res);
           echo "items found : ".  $count;
           mysqli_close($conn);
         }else{
-          $conn = mysqli_connect("localhost", "bechde", "bechde", "bechde");
+          include('connection.php');
           if (!$conn) {
               die("Connection failed: " . mysqli_connect_error());
           }
-
-          $sql =" SELECT * from product ;";
+          $sql =" SELECT * from product  where stat = 'available'AND univ = '$_SESSION[univ]';";
           $res = mysqli_query($conn,$sql);
+        
           $count = mysqli_num_rows($res);
           echo "total listed items found : " . $count ;
           mysqli_close($conn);
@@ -77,27 +83,27 @@
       <?php
 
           
-          $conn = mysqli_connect("localhost", "bechde", "bechde", "bechde");
+          include('connection.php');
           if (!$conn) {
               die("Connection failed: " . mysqli_connect_error());
           }
           if(isset($_GET['filter'])){
           
             if($_GET['filter']=='recent'){
-              $sql =" SELECT * from product,user_data where product.user_id = user_data.user_id ORDER by prod_id desc;";
+              $sql =" SELECT * from product,user_data where product.user_id = user_data.user_id  AND stat ='available' AND product.univ = '$_SESSION[univ]' ORDER by prod_id desc;";
               echo "<script>
               document.querySelector('#link1').style.background = '#b2bec3';
               </script>";
             }
             else if($_GET['filter']=='sp'){
          
-              $sql =" SELECT * from product,user_data where product.user_id = user_data.user_id ORDER by sell desc;";
+              $sql =" SELECT * from product,user_data where product.user_id = user_data.user_id AND stat ='available' AND product.univ = '$_SESSION[univ]' ORDER by sell desc;";
               echo "<script>
               document.querySelector('#link2').style.background = '#b2bec3';
               </script>";
             }
            else{
-              $sql =" SELECT * from product,user_data where product.user_id = user_data.user_id ORDER by rent desc;";
+              $sql =" SELECT * from product,user_data where product.user_id = user_data.user_id AND stat ='available' AND product.univ = '$_SESSION[univ]' ORDER by rent desc;";
               echo "<script>
               document.querySelector('#link3').style.background = '#b2bec3';
               </script>";
@@ -106,10 +112,10 @@
           }
           else if(isset($_REQUEST['sitem'])){
             $item = $_REQUEST['sitem'];
-            $sql =" SELECT * from product,user_data where product.user_id = user_data.user_id AND pname like '%$item%';";
+            $sql =" SELECT * from product,user_data where product.user_id = user_data.user_id AND pname like '%$item%' AND stat ='available' AND product.univ = '$_SESSION[univ]';";
           }
           else{
-            $sql =" SELECT * from product,user_data where product.user_id = user_data.user_id ;";
+            $sql =" SELECT * from product,user_data where product.user_id = user_data.user_id AND stat ='available' AND product.univ = '$_SESSION[univ]';";
           }
         
           $res = mysqli_query($conn,$sql);

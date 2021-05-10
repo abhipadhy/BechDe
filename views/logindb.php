@@ -1,6 +1,6 @@
 <?php
 
-$conn = mysqli_connect("localhost", "bechde", "bechde", "bechde");
+include('connection.php');
 if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }

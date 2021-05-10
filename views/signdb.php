@@ -7,7 +7,7 @@
         $mail = new PHPMailer\PHPMailer\PHPMailer();
         $mail->IsSMTP(); // enable SMTP
 
-        $conn = mysqli_connect("localhost", "bechde", "bechde", "bechde");
+        include_once('connection.php');
         if (!$conn) {
             die("Connection failed: " . mysqli_connect_error());
         }
@@ -67,7 +67,9 @@ if($result){
                 header("location:login.php");
             }
         } else {
-            echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+            $Message = urlencode(mysqli_error($conn));
+            header("Location:editprof.php?Message=".$Message);
+            die;
         }
 
 

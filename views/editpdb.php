@@ -1,4 +1,5 @@
 <?php
+        include_once('connection.php');
         session_start();
         require("../vendor/phpmailer/phpmailer/src/PHPMailer.php");
         require("../vendor/phpmailer/phpmailer/src/SMTP.php");
@@ -7,7 +8,7 @@
         $mail = new PHPMailer\PHPMailer\PHPMailer();
         $mail->IsSMTP(); // enable SMTP
 
-        $conn = mysqli_connect("localhost", "bechde", "bechde", "bechde");
+        
         if (!$conn) {
             die("Connection failed: " . mysqli_connect_error());
         }
@@ -87,7 +88,15 @@ if($result){
 
           
         } else {
-            echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+
+            $str =mysqli_error($conn);
+            if(str_contains($str,'Duplicate')){
+                $Message = urlencode('User Email Already Exists');
+            }else{
+                $Message = urlencode(mysqli_error($conn));
+            }
+            header("Location:editprof.php?Message=".$Message);
+            die;
         }
 
 

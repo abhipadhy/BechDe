@@ -170,6 +170,10 @@ h1 {
     min-height: 100%;
     box-sizing: border-box;
   }
+
+  #empty{
+  
+  }
   .righttab{
     width: 80%;
     margin-left: 0%;

@@ -7,7 +7,7 @@
         $mail = new PHPMailer\PHPMailer\PHPMailer();
         $mail->IsSMTP(); // enable SMTP
 
-        $conn = mysqli_connect("localhost", "bechde", "bechde", "bechde");
+        include_once('connection.php');
         if (!$conn) {
             die("Connection failed: " . mysqli_connect_error());
         }
@@ -44,8 +44,9 @@
             if(!$mail->Send()) {
                 echo "Mailer Error: " . $mail->ErrorInfo;
             } else {
-                
-                header("location:forpass2.php");
+                $Message = urlencode("Verification Code Sent! To Email");
+                header("Location:forpass2.php?Message=.$Message");
+                die;
             }
         }else{
             $Message = urlencode("User Email Does not Exist");

@@ -1,3 +1,8 @@
+<?php
+session_start();
+if(!isset($_SESSION['uid']))
+header("location:login.php?Message=Please login to continue.");
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,9 +19,9 @@
 </head>
 <body>
     <nav class="navbar">
-        <h1>BechDe</h1>
+        <a href="home.php" style="text-decoration: none; margin-left:5%;"><h1>BechDe</h1></a>
       <ul>
-        <li><a href="login.php">Login</a></li>
+        <li><a href="login.php?message=logout">Logout</a></li>
       </ul>
     </nav>  
     
@@ -69,7 +74,7 @@
             <option value="" disabled selected style="color: opacity=0.5;">Select From The Univeristy</option>
 
             <?php
-                $conn = mysqli_connect("localhost", "bechde", "bechde", "bechde");
+                include('connection.php');
                     if (!$conn) {
                         die("Connection failed: " . mysqli_connect_error());
                     }
@@ -106,14 +111,13 @@
 </footer>
 
 <?php
-        session_start();
-        $con = mysqli_connect("localhost", "bechde", "bechde", "bechde");
-         if (!$con) {
+        include('connection.php');
+         if (!$conn) {
             die("Connection failed: " . mysqli_connect_error());
         }
         
         $sql = "select * from user_data where  user_id = $_SESSION[uid]; ";
-        $result =mysqli_query($con, $sql);
+        $result =mysqli_query($conn, $sql);
         
         if (mysqli_num_rows($result)!=0) {
             
@@ -141,7 +145,7 @@
         ";  
            } 
         } 
-  mysqli_close($con);
+  mysqli_close($conn);
     
     ?>
     

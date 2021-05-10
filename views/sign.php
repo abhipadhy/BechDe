@@ -14,7 +14,7 @@
 </head>
 <body>
     <nav class="navbar">
-        <h1>BechDe</h1>
+    <a href="home.php" style="text-decoration: none; margin-left:5%;"><h1>BechDe</h1></a>
       <ul>
         <li><a href="login.php">Login</a></li>
       </ul>
@@ -70,7 +70,7 @@
             <option value="" disabled selected style="color: opacity=0.5;">Select From The Univeristy</option>
 
             <?php
-                $conn = mysqli_connect("localhost", "bechde", "bechde", "bechde");
+                include('connection.php');
                     if (!$conn) {
                         die("Connection failed: " . mysqli_connect_error());
                     }

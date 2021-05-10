@@ -1,3 +1,9 @@
+<?php 
+session_start();
+if(isset($_GET['message']))
+if($_GET['message']=='logout')
+session_destroy();
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,11 +16,10 @@
 
 <body>
     <nav class="navbar">
-        <h1>BechDe</h1>
+    <a href="home.php" style="text-decoration: none; margin-left:5%;"><h1>BechDe</h1></a>
       <ul>
-        <li><a href="home.php">Home</a></li>
-        <li><a href="sell.html">Sell</a></li>
-        <li><a href="sell.html">Rent</a></li>
+        <li><a href="sign.php">SignUp</a></li>
+        <li><a href='reguni.php'>Register university</a></li>
       </ul>
     </nav>
 

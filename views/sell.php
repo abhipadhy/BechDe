@@ -1,3 +1,8 @@
+<?php
+session_start();
+if(!isset($_SESSION['uid']))
+header("location:login.php?Message=Please login to continue.");
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -19,7 +24,7 @@
   
       <div class="left">
         <nav class="navbar">
-          <h1>BechDe</h1>
+        <a href="home.php" style="text-decoration: none; margin-left:5%;"><h1>BechDe</h1></a>
         </nav>
         <div id="primary-slider" class="splide">
           <div class="splide__track">
