@@ -13,7 +13,8 @@ header("location:login.php?Message=Please login to continue.");
     <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/js/splide.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/css/splide.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/sell.css" />
-    <title>BechDe</title>
+    <link rel="icon" href="../Assets/logo1.png">
+    <title>List Product</title>
     <style>
       .splide--nav>.splide__track>.splide__list>.splide__slide.is-active {
           border: 3px solid #17071b;

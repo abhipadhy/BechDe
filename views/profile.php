@@ -9,10 +9,11 @@ header("location:login.php?Message=Please login to continue.");
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <link rel="icon" href="../Assets/logo1.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="../css/profile.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
-  <title>BechDe</title>
+  <title>Profile</title>
 </head>
 
 <body>
@@ -54,54 +55,64 @@ header("location:login.php?Message=Please login to continue.");
     <span id="purchased" style="cursor:pointer;text-transform: capitalize;"><button style="color:#26133f;">Purchased
         Products</button> </span>
     <span id="listed" style="cursor:pointer; text-transform: capitalize;"><button>Listed Products</button></span><br>
+    <p style="text-align: center;color:red;text-transform:capitalize;font-size:90% ; display:block" id="msg">
+                <?php
+                        if(isset($_GET['Message'])){
+                            echo " $_GET[Message] ";
+                        }else{
+                            echo "";
+                        }
+                ?>
+                </p>
 
 
 
     <div class="p_container" id="perchased_list" style="text-align: left;">
       <div class="pc">
-        <div class="card">
-          <img src="../Assets/beard.jpg">
-          <div class="right1">
-            <span id="productName">Beardo beard grooming kit</span><br>
-            <span id="seller">abhishek padhy</span>
-            <p id="desc">"Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quos maiores aut eveniet fuga
-              necessitatibus cupiditate, eligendi consequuntur sit. Quam est at perspiciatis voluptates voluptatum,
-              doloremque fugiat quis soluta non sunt!"</p>
-            <table>
-              <tr>
-                <td id="buy" style="font-weight: 500;">$ 100</td>
-                <td id="rent" style="font-weight: 500;">$10</td>
-              </tr>
 
-              <tr>
-                <td><button class="btn1">Buy</button></td>
-                <td><button class="bt2">Rent</button></td>
-              </tr>
-            </table>
-          </div>
-        </div>
-        <div class="card">
-          <img src="../Assets/cycle.JPG">
-          <div class="right1">
-            <span id="productName">Hero cycle</span><br>
-            <span id="seller">hemang Pandey</span>
-            <p id="desc">"Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quos maiores aut eveniet fuga
-              necessitatibus cupiditate, eligendi consequuntur sit. Quam est at perspiciatis voluptates voluptatum,
-              doloremque fugiat quis soluta non sunt!"</p>
-            <table>
-              <tr>
-                <td id="buy" style="font-weight: 500;">$ 100</td>
-                <td id="rent" style="font-weight: 500;">$10</td>
-              </tr>
-
-              <tr>
-                <td><button class="btn1">Buy</button></td>
-                <td><button class="bt2">Rent</button></td>
-              </tr>
-            </table>
-          </div>
-        </div>
-
+      <?php 
+                  include('connection.php');
+                  if (!$conn) {
+                      die("Connection failed: " . mysqli_connect_error());
+                  }
+                  $id=$_SESSION['uid'];
+                
+                  $sql="select * from purchased_prod,product,user_data where purchased_prod.prod_id=product.prod_id AND product.user_id=user_data.user_id AND purchased_prod.user_id=$_SESSION[uid];";
+                  $result= mysqli_query($conn,$sql);
+              
+                if(mysqli_num_rows($result)!=0){
+                
+                  while($row = mysqli_fetch_assoc($result)){
+                            
+                    echo "  <a href='product.php?prod_id=$row[prod_id]'>
+                          <div class='card1'>
+                          <img src='$row[img1]'>
+                          <div class='right1'>
+                              <span id='productName'>$row[pname]</span><br>
+                              <span  id='seller'>$row[name] </span>
+                              <p id='desc'>$row[descp]</p>
+                              <table>
+                                  <tr><td id='buy' style='font-weight: 500;'>Rs  $row[sell]</td>
+                                  <td id='rent' style='font-weight: 500;'>Rs  $row[rent]</td></tr>
+                                  
+                                  <tr><td><button class='btn1'>Buy</button></td> <td><button class='bt2'>Rent</button></td></tr>
+                              </table>
+                          </div>
+                      </div>
+                    </a> 
+                    ";
+            
+              } //while ends here
+                  
+                }
+                else{
+                  echo "<p style='text-align:center;'>No Products Purchased.</p>";
+                }
+                  mysqli_close($conn);
+                
+                  
+      ?>
+            
 
       </div>
 
@@ -168,4 +179,21 @@ header("location:login.php?Message=Please login to continue.");
     document.querySelector("#purchased button").style.transition = "0.3s";
     document.querySelector(".pc").style.display = "none";
   });
+</script>
+
+<script type="text/javascript">
+    document.querySelector('html').addEventListener('mouseover',()=>{
+            var hold = document.querySelector("#msg").innerHTML;
+                if(hold != ''){
+                   
+                        setTimeout(() => {
+                            document.querySelector("#msg").innerHTML = '';
+                            document.querySelector("#msg").style.transition = "0.3s";
+                        },4000);
+                
+                
+        }
+    });
+
+        
 </script>

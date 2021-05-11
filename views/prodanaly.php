@@ -9,9 +9,10 @@ header("location:login.php?Message=Please login to continue.");
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product</title>
+    <title>Product Analysis</title>
     <link rel="stylesheet" href="../css/product.css">
     <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/js/splide.min.js"></script>
+	<link rel="icon" href="../Assets/logo1.png">
     <link href="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/css/splide.min.css" rel="stylesheet">
 	<style>
 		.splide--nav>.splide__track>.splide__list>.splide__slide.is-active {
@@ -89,6 +90,7 @@ header("location:login.php?Message=Please login to continue.");
 							<tr>
 							<td><a href='cartdb.php?prod_id=$resarr[prod_id]&type=buy'><button class='btn1'>Buy</button></a></td> 
 							<td><a href='cartdb.php?prod_id=$resarr[prod_id]&type=rent'><button class='bt2'>Rent</button></a></td>
+							<td><a href='delprod.php?prod_id=$resarr[prod_id]&type=rent'><button class='bt2'>Delete</button></a></td>
 							</tr>
 						</table><br><br>
 						<span  id='seller' style='margin-top: 0;'>seller info : </span>
@@ -139,6 +141,7 @@ header("location:login.php?Message=Please login to continue.");
 				if (!$conn) {
 					die("Connection failed: " . mysqli_connect_error());
 				}
+				global $stat;
 
 				$sql = "select count(visitor_id) 'uni' ,sum(count) 'cnt' from stats where prod_id=$_GET[prod_id];";
 				$fetch= mysqli_fetch_assoc(mysqli_query($conn,$sql));
@@ -162,6 +165,17 @@ header("location:login.php?Message=Please login to continue.");
 				$sql2 = "select count(user_id) 'crt' from cart where prod_id=$_GET[prod_id];";
 				$fetch2= mysqli_fetch_assoc(mysqli_query($conn,$sql2));
 				$formval3 = $fetch2['crt'];
+				if($formval3 == 0){
+					$sql5= "SELECT * from purchased_prod where prod_id=$_GET[prod_id];";
+					$resultant =mysqli_query($conn,$sql5);
+					if(mysqli_num_rows($resultant)!=0){
+						$formval3=1;
+						$ans = mysqli_fetch_assoc($resultant);
+						$stat = $ans['type'];
+					}else{
+						$formval3=0;
+					}	
+				}
 
 				echo "
 					<div class='analycard' id='analycard3'>
@@ -169,6 +183,20 @@ header("location:login.php?Message=Please login to continue.");
 						<p>Added To Cart</p>
 					</div>
 				";
+
+				if($stat=='buy'){
+					echo " 
+					<div  id='analycard4'>
+						<h2>Sold</h2>
+					</div>
+					";
+				}else if($stat=='rent'){
+					echo " 
+					<div  id='analycard4'>
+						<h2>Rented</h2>
+					</div>
+					";
+				}
 
 				mysqli_close($conn);
 			?>

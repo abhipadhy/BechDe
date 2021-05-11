@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forgot Pass</title>
     <link rel="stylesheet" href="../css/login.css">
+    <link rel="icon" href="../Assets/logo1.png">
 </head>
 <body>
 <nav class="navbar">

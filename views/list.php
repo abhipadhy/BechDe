@@ -10,6 +10,7 @@ header("location:login.php?Message=Please login to continue.");
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../css/list.css">
+    <link rel="icon" href="../Assets/logo1.png">
     <title>BechDe</title>
   </head>
   <body>
@@ -123,7 +124,7 @@ header("location:login.php?Message=Please login to continue.");
   
               while($row = mysqli_fetch_assoc($res)){
                 
-                    echo "  <a href='product.php?prod_id=$row[prod_id]'>
+                    echo "  <a href='count.php?prod_id=$row[prod_id]'>
                           <div class='card'>
                           <img src='$row[img1]'>
                           <div class='right1'>

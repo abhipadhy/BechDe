@@ -82,8 +82,8 @@ if($result){
             if(!$mail->Send()) {
                 echo "Mailer Error: " ;
             } else {
-                echo "Profile Updated";
-                header("location:profile.php");
+                $msg = urlencode('Profile Updated');
+                header("location:profile.php?Message=$msg");
             }
 
           

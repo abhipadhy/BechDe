@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register University</title>
+    <title>New Passowrd</title>
+    <link rel="icon" href="../Assets/logo1.png">
     <link rel="stylesheet" href="../css/login.css">
 </head>
 <body>

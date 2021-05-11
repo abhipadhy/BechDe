@@ -13,12 +13,12 @@
         $result = mysqli_query($conn, $sql1);
 
         if($result){
-            $Message = urlencode("Product added");
-            header("Location:home.php?Message=".$Message);
+            $Message = urlencode("$_REQUEST[pname] Sucessfully Added");
+            header("Location:profile.php?Message=".$Message);
             die;
         }else{
             $Message = urlencode("Unable to list product");
-            header("Location:sell.php?Message=".$Message);
+            header("Location:profile.php?Message=".$Message);
             die;
         }
    }else{

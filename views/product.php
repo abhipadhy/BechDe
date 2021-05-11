@@ -10,6 +10,7 @@ header("location:login.php?Message=Please login to continue.");
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product</title>
+	<link rel="icon" href="../Assets/logo1.png">
     <link rel="stylesheet" href="../css/product.css">
     <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/js/splide.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/@splidejs/splide@latest/dist/css/splide.min.css" rel="stylesheet">
@@ -137,7 +138,6 @@ header("location:login.php?Message=Please login to continue.");
 </body>
 </html>
 <script>
-
 var secondarySlider = new Splide( '#secondary-slider' );
 var primarySlider = new Splide( '#primary-slider' );
 // primaryslider.sync( secondarySlider ).mount();
@@ -167,43 +167,8 @@ document.addEventListener( 'DOMContentLoaded', function () {
 		arrows     : false,
 		cover      : true,
     keyboard:'focused',
-  
- 
-	} );
+	} ).mount();
 	
 	primarySlider.sync( secondarySlider ).mount();
 } );
-</script>
-
-<script>
-	document.querySelector('html').addEventListener('load',()=>{
-		console.log('inside');
-		<?php
-				include('connection.php');
-				if (!$conn) {
-					die("Connection failed: " . mysqli_connect_error());
-				}else{
-					$sql1 = "select * from stats where visitor_id = $_SESSION[uid] AND prod_id = $_GET[prod_id];";
-					$res = mysqli_query($conn,$sql1);
-					if($res){
-						if(mysqli_num_rows($res)==0){ 
-							$sql2= "select user_id from product where prod_id=$_GET[prod_id];";
-							$val = mysqli_fetch_assoc(mysqli_query($conn,$sql2));
-
-							$sql= "insert into stats values ($_GET[prod_id],$val[user_id],$_SESSION[uid],1);";
-						}else{
-							$sql="update stats SET count = count + 1 where visitor_id = $_SESSION[uid] AND prod_id=$_GET[prod_id]; ";
-						}
-						
-						if(!mysqli_query($conn,$sql)){
-							echo mysqli_error($conn);
-						}
-					}else{
-						echo mysqli_error($conn);
-					}
-											
-				}
-				
-		?>
-	});
 </script>

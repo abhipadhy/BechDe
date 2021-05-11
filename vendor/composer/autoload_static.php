@@ -7,6 +7,11 @@ namespace Composer\Autoload;
 class ComposerStaticInit77df75ba81d835944faa193656853a22
 {
     public static $prefixLengthsPsr4 = array (
+        'R' => 
+        array (
+            'Razorpay\\Tests\\' => 15,
+            'Razorpay\\Api\\' => 13,
+        ),
         'P' => 
         array (
             'PHPMailer\\PHPMailer\\' => 20,
@@ -14,9 +19,27 @@ class ComposerStaticInit77df75ba81d835944faa193656853a22
     );
 
     public static $prefixDirsPsr4 = array (
+        'Razorpay\\Tests\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/razorpay/razorpay/tests',
+        ),
+        'Razorpay\\Api\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/razorpay/razorpay/src',
+        ),
         'PHPMailer\\PHPMailer\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
+        ),
+    );
+
+    public static $prefixesPsr0 = array (
+        'R' => 
+        array (
+            'Requests' => 
+            array (
+                0 => __DIR__ . '/..' . '/rmccue/requests/library',
+            ),
         ),
     );
 
@@ -29,6 +52,7 @@ class ComposerStaticInit77df75ba81d835944faa193656853a22
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInit77df75ba81d835944faa193656853a22::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit77df75ba81d835944faa193656853a22::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit77df75ba81d835944faa193656853a22::$prefixesPsr0;
             $loader->classMap = ComposerStaticInit77df75ba81d835944faa193656853a22::$classMap;
 
         }, null, ClassLoader::class);
